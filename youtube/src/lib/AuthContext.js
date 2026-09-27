@@ -36,29 +36,42 @@ export const UserProvider = ({ children }) => {
    * =========================================================
    */
   const handlegooglesignin = async () => {
-    try {
-      const result = await signInWithPopup(auth, provider);
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const firebaseuser = result.user;
 
-      const firebaseuser = result.user;
+    const payload = {
+      email: firebaseuser.email,
+      name: firebaseuser.displayName,
+      image:
+        firebaseuser.photoURL ||
+        "https://github.com/shadcn.png",
+    };
 
-      const payload = {
-        email: firebaseuser.email,
-        name: firebaseuser.displayName,
-        image:
-          firebaseuser.photoURL ||
-          "https://github.com/shadcn.png",
-      };
+    console.log("Firebase sign-in successful:", firebaseuser.email);
+    console.log("Calling backend:", process.env.NEXT_PUBLIC_BACKEND_URL);
 
-      const response = await axiosInstance.post(
-        "/user/login",
-        payload
-      );
+    const response = await axiosInstance.post(
+      "/user/login",
+      payload
+    );
 
+    console.log("Backend login response:", response.data);
+
+    if (response.data?.result) {
       login(response.data.result);
-    } catch (error) {
-      console.error(error);
+    } else {
+      throw new Error("Backend did not return a user.");
     }
-  };
+  } catch (error) {
+    console.error("GOOGLE SIGN-IN ERROR:", error);
+    alert(
+      error?.response?.data?.message ||
+      error?.message ||
+      "Google sign-in failed."
+    );
+  }
+};
 
   /*
    * =========================================================
