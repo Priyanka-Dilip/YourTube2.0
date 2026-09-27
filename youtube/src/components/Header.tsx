@@ -241,7 +241,7 @@ const Header = () => {
                 THEME
                 ================================================= */}
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -336,7 +336,7 @@ const Header = () => {
                 PROFILE
                 ================================================= */}
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+              <DropdownMenuTrigger>
                 <Button
                   variant="ghost"
                   className="relative h-8 w-8 rounded-full"
@@ -356,10 +356,9 @@ const Header = () => {
               <DropdownMenuContent
                 className="w-56"
                 align="end"
-                forceMount
               >
                 {user?.channelname ? (
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem>
                     <Link
                       href={`/channel/${user?._id}`}
                     >
@@ -381,19 +380,19 @@ const Header = () => {
                   </div>
                 )}
 
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem>
                   <Link href="/history">
                     History
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem>
                   <Link href="/liked">
                     Liked videos
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem>
                   <Link href="/watch-later">
                     Watch later
                   </Link>
